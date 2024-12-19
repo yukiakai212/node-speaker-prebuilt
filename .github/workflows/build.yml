@@ -60,7 +60,7 @@ jobs:
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
-          VERSION=$(jq -r .version < package.json)
+          VERSION=$(node -p "require('./package.json').version")
           PLATFORM=${{ matrix.os }}  # Set platform name
           PLATFORM_VERSION="${VERSION}-${PLATFORM}"
           npm version $PLATFORM_VERSION --no-git-tag-version
