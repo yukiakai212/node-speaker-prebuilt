@@ -67,13 +67,6 @@ jobs:
         env:
           NODE_ENV: production
 
-      # Step 8: Publish to GitHub Packages
-      - name: Publish to GitHub Packages
-        run: |
-          npm publish --registry=https://npm.pkg.github.com --access public
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}  # GitHub token for authentication
-
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
