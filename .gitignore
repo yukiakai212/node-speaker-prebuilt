@@ -6,3 +6,4 @@
 # dev files
 /?.js
 /*.mp3
+*.env
