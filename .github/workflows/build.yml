@@ -55,4 +55,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: speaker-binaries
-          path: build/Release/*.tar.gz  # Adjust this path based on the output of @mapbox/node-pre-gyp
+          path: build/release/*.tar.gz  # Adjust this path based on the output of @mapbox/node-pre-gyp
