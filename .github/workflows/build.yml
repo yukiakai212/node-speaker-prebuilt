@@ -56,21 +56,16 @@ jobs:
           npx @mapbox/node-pre-gyp package  # Package the binary
         env:
           NODE_ENV: production
-      
-      # Step 8: Set platform-specific version
-      - name: Set platform-specific version ubuntu and mac
-        run: |
-          VERSION=$(node -p "require('./package.json').version")
-          PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-      - name: Set platform-specific version Windows
-        run: |
-          set VERSION=$(node -p "require('./package.json').version")
-          set PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
-        if: matrix.os == 'windows-latest'
+          
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
+          if [ "${{ matrix.os }}" == "ubuntu-latest" ] || [ "${{ matrix.os }}" == "macos-latest" ]; then
+            VERSION=$(node -p "require('./package.json').version")
+            PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
+          else
+            set VERSION=$(node -p "require('./package.json').version")
+            set PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
           npm version $PLATFORM_VERSION --no-git-tag-version
           npm publish --access public  # Publish the package to npm
         env:
