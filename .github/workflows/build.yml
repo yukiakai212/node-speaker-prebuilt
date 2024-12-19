@@ -1,51 +1,78 @@
----
-name: Build and Publish Precompiled Binaries for speaker
+name: Build and Publish Precompiled Binaries for speaker-rebuild
+
 on:
   push:
     branches:
-      - master
+      - master  # Trigger on push to the main branch
   pull_request:
     branches:
-      - master
+      - master  # Trigger on pull request to main branch
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
+        os: [ubuntu-latest, windows-latest, macos-latest]  # Build on Linux, Windows, and macOS
+
     steps:
+      # Step 1: Checkout the repository code
       - name: Checkout code
         uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "20"
+          node-version: '20'  # Use the desired Node.js version
+      # options
       - name: Install libasound2-dev
         run: sudo apt-get install -y libasound2-dev
         if: matrix.os == 'ubuntu-latest'
+      # Step 3: Install dependencies
       - name: Install dependencies
-        run: >
+        run: |
           npm install  # Install dependencies
-
           npm install @mapbox/node-pre-gyp --save-dev  # Install @mapbox/node-pre-gyp
-      - name: Build the speaker module
-        run: npx @mapbox/node-pre-gyp configure build --fallback-to-build
-      - name: Publish to GitHub Packages
-        run: >
-          npx @mapbox/node-pre-gyp package publish
-          --registry=https://npm.pkg.github.com
+
+      # Step 4: Rebuild the native module (to ensure the binary is built)
+      - name: Rebuild the speaker module
+        run: |
+          npx @mapbox/node-pre-gyp rebuild  # Rebuild the binary
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          NODE_ENV: production
+
+      # Step 5: Build the speaker module (native bindings)
+      - name: Build the speaker module
+        run: |
+          npx @mapbox/node-pre-gyp configure build --fallback-to-build  # Build the binary if not already built
+        env:
+          NODE_ENV: production
+
+      # Step 6: Package the binary
+      - name: Package the speaker binary
+        run: |
+          npx @mapbox/node-pre-gyp package  # Package the binary
+        env:
+          NODE_ENV: production
+
+      # Step 7: Publish to GitHub Packages
+      - name: Publish to GitHub Packages
+        run: |
+          npx @mapbox/node-pre-gyp publish --registry=https://npm.pkg.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}  # GitHub token for authentication
+
+      # Step 8: Publish to npm
       - name: Publish to npm
         run: |
           npm publish --access public  # Publish the package to npm
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # npm token for authentication
+
+      # Step 9: Upload the precompiled binaries as artifacts
       - name: Upload precompiled binaries as artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4  # Updated to v3
         with:
           name: speaker-binaries
-          path: build/release/*.tar.gz
+          path: build/release/*.tar.gz  # Path to the compiled binaries in the lib/binding directory
