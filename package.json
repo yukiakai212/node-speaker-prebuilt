@@ -35,7 +35,7 @@
   },
   "binary": {
   "module_name": "speaker-binaries",
-    "module_path": "./build/",
+    "module_path": "./build/Release/",
     "host": "https://github.com/yukiakai212/node-speaker-prebuilt/releases/download/v${version}/"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
