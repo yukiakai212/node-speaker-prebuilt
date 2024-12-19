@@ -61,14 +61,12 @@ jobs:
       - name: Set platform-specific version ubuntu and mac
         run: |
           VERSION=$(node -p "require('./package.json').version")
-          PLATFORM=${{ matrix.os }}  # Set platform name
-          PLATFORM_VERSION="${VERSION}-${PLATFORM}"
+          PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       - name: Set platform-specific version Windows
         run: |
           set VERSION=$(node -p "require('./package.json').version")
-          set PLATFORM=${{ matrix.os }}  # Set platform name
-          set PLATFORM_VERSION="${VERSION}-${PLATFORM}"
+          set PLATFORM_VERSION="${VERSION}-${{ matrix.os }}"
         if: matrix.os == 'windows-latest'
       # Step 9: Publish to npm
       - name: Publish to npm
