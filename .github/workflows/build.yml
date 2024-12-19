@@ -51,6 +51,15 @@ jobs:
         env:
           NODE_ENV: production
 
+      # Step 6: Check if the binary was created
+      - name: Check binary existence
+        run: |
+          ls -l build/  # List the contents of the build directory to ensure the binary exists
+          if [ ! -f "build/speaker-binaries.node" ]; then
+            echo "Error: speaker-binaries.node not found!"
+            exit 1
+          fi
+
       # Step 7: Package the binary
       - name: Package the speaker binary
         run: |
