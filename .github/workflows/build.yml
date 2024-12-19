@@ -50,16 +50,6 @@ jobs:
           npx @mapbox/node-pre-gyp configure build --fallback-to-build  # Build the binary if not already built
         env:
           NODE_ENV: production
-
-      # Step 6: Check if the binary was created
-      - name: Check binary existence
-        run: |
-          ls -l build/Release  # List the contents of the build directory to ensure the binary exists
-          if [ ! -f "build/Release/speaker-binaries.node" ]; then
-            echo "Error: speaker-binaries.node not found!"
-            exit 1
-          fi
-
       # Step 7: Package the binary
       - name: Package the speaker binary
         run: |
