@@ -3,10 +3,10 @@ name: Build and Publish Precompiled Binaries for speaker-rebuild
 on:
   push:
     branches:
-      - master  # Trigger on push to the main branch
+      - master  # Trigger on push to the master branch
   pull_request:
     branches:
-      - master  # Trigger on pull request to main branch
+      - master  # Trigger on pull request to the master branch
 
 jobs:
   build:
@@ -25,10 +25,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20'  # Use the desired Node.js version
-      # options
+
+      # Install necessary packages (specifically for Linux)
       - name: Install libasound2-dev
         run: sudo apt-get install -y libasound2-dev
         if: matrix.os == 'ubuntu-latest'
+
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
@@ -49,30 +51,39 @@ jobs:
         env:
           NODE_ENV: production
 
-      # Step 6: Package the binary
+      # Step 6: Check if the binary was created
+      - name: Check binary existence
+        run: |
+          ls -l build/release/  # List the contents of the build/Release directory to ensure the binary exists
+          if [ ! -f "build/release/speaker-binaries.node" ]; then
+            echo "Error: speaker-binaries.node not found!"
+            exit 1
+          fi
+
+      # Step 7: Package the binary
       - name: Package the speaker binary
         run: |
           npx @mapbox/node-pre-gyp package  # Package the binary
         env:
           NODE_ENV: production
 
-      # Step 7: Publish to GitHub Packages
+      # Step 8: Publish to GitHub Packages
       - name: Publish to GitHub Packages
         run: |
           npx @mapbox/node-pre-gyp publish --registry=https://npm.pkg.github.com
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}  # GitHub token for authentication
 
-      # Step 8: Publish to npm
+      # Step 9: Publish to npm
       - name: Publish to npm
         run: |
           npm publish --access public  # Publish the package to npm
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # npm token for authentication
 
-      # Step 9: Upload the precompiled binaries as artifacts
+      # Step 10: Upload the precompiled binaries as artifacts
       - name: Upload precompiled binaries as artifacts
-        uses: actions/upload-artifact@v4  # Updated to v3
+        uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: speaker-binaries
-          path: build/release/*.tar.gz  # Path to the compiled binaries in the lib/binding directory
+          path: build/release/*.tar.gz  # Path to the compiled binaries in the build/Release directory
