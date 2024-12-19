@@ -1,0 +1,58 @@
+name: Build and Publish Precompiled Binaries for speaker
+
+on:
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull request to main branch
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]  # Build on Linux, Windows, and macOS
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'  # Use the desired Node.js version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install  # Install dependencies
+          npm install @mapbox/node-pre-gyp --save-dev  # Install @mapbox/node-pre-gyp
+
+      # Step 4: Build the speaker module
+      - name: Build the speaker module
+        run: npx @mapbox/node-pre-gyp configure build --fallback-to-build  # Use npx to run the new version
+
+      # Step 5: Publish to GitHub Packages
+      - name: Publish to GitHub Packages
+        run: |
+          npx @mapbox/node-pre-gyp package publish --registry=https://npm.pkg.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 6: Publish to npm
+      - name: Publish to npm
+        run: |
+          npm publish --access public  # Publish the package to npm
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # Use the npm token stored in GitHub secrets
+
+      # Step 7: Upload the precompiled binaries as artifacts (optional)
+      - name: Upload precompiled binaries as artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: speaker-binaries
+          path: build/Release/*.tar.gz  # Adjust this path based on the output of @mapbox/node-pre-gyp
