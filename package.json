@@ -23,12 +23,6 @@
     "@mapbox/node-pre-gyp": "^1.0.11",
     "standard": "^14.3.1"
   },
-  "binary": {
-    "module_name": "speaker-prebuilt",
-    "module_path": "./build/release/",
-    "remote_path": "./{version}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz"
-  },
   "engines": {
     "node": ">=8.6"
   },
@@ -38,6 +32,11 @@
   },
   "bugs": {
     "url": "https://github.com/yukiakai212/node-speaker-prebuilt/issues"
+  },
+  "binary": {
+  "module_name": "speaker-binaries",
+    "module_path": "./build/release/",
+    "host": "https://github.com/yukiakai212/node-speaker-prebuilt/releases/download/v${version}/"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
   "keywords": [
