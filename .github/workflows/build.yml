@@ -54,8 +54,8 @@ jobs:
       # Step 6: Check if the binary was created
       - name: Check binary existence
         run: |
-          ls -l build/  # List the contents of the build directory to ensure the binary exists
-          if [ ! -f "build/speaker-binaries.node" ]; then
+          ls -l build/Release  # List the contents of the build directory to ensure the binary exists
+          if [ ! -f "build/Release/speaker-binaries.node" ]; then
             echo "Error: speaker-binaries.node not found!"
             exit 1
           fi
@@ -86,4 +86,4 @@ jobs:
         uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: speaker-binaries
-          path: build/*.tar.gz  # Path to the compiled binaries in the build/Release directory
+          path: build/Release/*.tar.gz  # Path to the compiled binaries in the build/Release directory
