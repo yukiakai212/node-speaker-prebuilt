@@ -70,7 +70,7 @@ jobs:
       # Step 8: Publish to GitHub Packages
       - name: Publish to GitHub Packages
         run: |
-          npx @mapbox/node-pre-gyp publish --registry=https://npm.pkg.github.com
+          npm publish --registry=https://npm.pkg.github.com --access public
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}  # GitHub token for authentication
 
