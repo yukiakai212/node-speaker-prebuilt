@@ -70,6 +70,10 @@ jobs:
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
+          VERSION=$(jq -r .version < package.json)
+          PLATFORM=${{ matrix.os }}  # Set platform name
+          PLATFORM_VERSION="${VERSION}-${PLATFORM}"
+          npm version $PLATFORM_VERSION --no-git-tag-version
           npm publish --access public  # Publish the package to npm
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # npm token for authentication
