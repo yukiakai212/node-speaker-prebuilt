@@ -61,7 +61,7 @@ jobs:
         id: version
         uses: bbonkr/get-version-action@v1
         with:
-          path: ./package.json  # Path to your package.json (use relative path if needed)    
+          project: './package.json'  # Path to your package.json (use relative path if needed)    
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
