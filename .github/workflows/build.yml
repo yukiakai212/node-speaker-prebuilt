@@ -77,4 +77,5 @@ jobs:
         uses: actions/upload-artifact@v4  # Updated to v4
         with:
           name: speaker-binaries
+          overwrite: true
           path: build/stage/*.tar.gz  # Path to the compiled binaries in the build/Release directory
