@@ -9,13 +9,15 @@
   "types": "index.d.ts",
   "scripts": {
     "test": "standard && node-gyp rebuild --mpg123-backend=dummy && mocha --reporter spec",
-	"prebuild": "npx @mapbox/node-pre-gyp configure build --fallback-to-build"
+	"prebuild": "npx @mapbox/node-pre-gyp configure build --fallback-to-build",
+	"postinstall": "node ./scripts/extract-binary.js"
   },
   "files": [
     "index.js",
     "index.d.js",
     "lib/",
     "build/stage/*.tar.gz",
+    "build/Release/**",
     "README.md"
   ],
   "dependencies": {
@@ -44,7 +46,7 @@
   },
   "binary": {
   "module_name": "speaker-binaries",
-    "module_path": "./build/stage/{node_abi}-{platform}-{arch}/",
+    "module_path": "./build/Release",
     "host": "https://npm.pkg.github.com/yukiakai212/node-speaker-prebuilt/"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
