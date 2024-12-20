@@ -35,38 +35,22 @@ jobs:
       - name: Install dependencies
         run: |
           npm install  # Install dependencies
-          npm install @mapbox/node-pre-gyp --save-dev  # Install @mapbox/node-pre-gyp
+          npm install prebuildify  # Install @mapbox/node-pre-gyp
 
       # Step 4: Rebuild the native module (to ensure the binary is built)
       - name: Rebuild the speaker module
         run: |
-          npx @mapbox/node-pre-gyp rebuild --loglevel=info  # Rebuild the binary
+          npx prebuildify --platform all
         env:
           NODE_ENV: production
 
       # Step 5: Build the speaker module (native bindings)
       - name: Build the speaker module
         run: |
-          npx @mapbox/node-pre-gyp configure build --fallback-to-build  # Build the binary if not already built
+          node build.js
         env:
           NODE_ENV: production
-      # Step 7: Package the binary
-      - name: Package the speaker binary
-        run: |
-          zip -r lib.zip ./build/Release/
-          npx @mapbox/node-pre-gyp package  # Package the binary
-        env:
-          NODE_ENV: production
-      - name: Extract module ubuntu
-        run: |
-          rm -rf ./build/Release/*
-          unzip lib.zip -d ./build/
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-      - name: Extract module win
-        run: |
-          rmdir /s /q ./build/Release/*
-          tar -xf lib.zip -C ./build/
-        if: matrix.os == 'windows-latest'
+          
       # Step 8: Get version from package.json using get-version-action
       - name: Get version from package.json
         id: version
@@ -81,11 +65,3 @@ jobs:
           npm publish --access public  # Publish the package to npm
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}  # npm token for authentication
-
-      # Step 10: Upload the precompiled binaries as artifacts
-      - name: Upload precompiled binaries as artifacts
-        uses: actions/upload-artifact@v4  # Updated to v4
-        with:
-          name: speaker-binaries
-          overwrite: true
-          path: build/stage/*.tar.gz  # Path to the compiled binaries in the build/Release directory

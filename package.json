@@ -11,22 +11,18 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "standard && node-gyp rebuild --mpg123-backend=dummy && mocha --reporter spec",
-    "postinstall": "node ./scripts/extract-binary.js"
+    "test": "standard && node-gyp rebuild --mpg123-backend=dummy && mocha --reporter spec"
   },
   "files": [
     "index.js",
     "index.d.js",
-    "lib/",
-    "build/stage/*.tar.gz",
-    "build/Release/**",
+    "build/*.node",
     "README.md"
   ],
   "dependencies": {
-    "bindings": "^1.3.0",
+    "bindings": "^1.5.0",
     "buffer-alloc": "^1.1.0",
-    "debug": "^4.0.0",
-    "tar": "^7.4.3"
+    "debug": "^4.0.0"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -44,9 +40,7 @@
     "url": "https://github.com/yukiakai212/node-speaker-prebuilt/issues"
   },
   "binary": {
-    "module_name": "speaker-binaries",
-    "module_path": "./build/Release",
-    "host": "https://npm.pkg.github.com/yukiakai212/node-speaker-prebuilt/"
+    "module_name": "speaker-binaries"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
   "keywords": [
