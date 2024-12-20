@@ -1,6 +1,6 @@
 {
   "name": "speaker-prebuilt",
-  "version": "1.5.28",
+  "version": "1.5.29",
   "license": "(MIT AND LGPL-2.1-only)",
   "description": "Output PCM audio data to the speakers, prebuilt version",
   "author": "Yuki Akai",
