@@ -42,7 +42,7 @@
   },
   "binary": {
   "module_name": "speaker-binaries",
-    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}/",
+    "module_path": "./build/Release/",
     "host": "https://npm.pkg.github.com"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
