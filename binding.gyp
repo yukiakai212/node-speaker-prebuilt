@@ -12,8 +12,8 @@
   ],
   "copies": [
         {
-          "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
-          "destination": "<(module_path)"
+          "files": [ "./build/Release/speaker-binaries.node" ],
+          "destination": "./build/stage/{node_abi}-{platform}-{arch}/"
         }
   ]
 }
