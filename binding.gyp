@@ -8,12 +8,12 @@
       'dependencies': [
         'deps/mpg123/mpg123.gyp:output'
       ],
-    }
-  ],
-  "copies": [
+    },
+	"copies": [
         {
-          "files": [ "./build/Release/speaker-binaries.node" ],
-          "destination": "./build/stage/{node_abi}-{platform}-{arch}/"
+          "files": [ "<(PRODUCT_DIR)/<(module_name).node" ],
+          "destination": "<(module_path)"
         }
+	]
   ]
 }
