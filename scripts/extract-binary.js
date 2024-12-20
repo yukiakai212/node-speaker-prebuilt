@@ -9,11 +9,14 @@ if (!fs.existsSync(outputDir)) {
 }
 
 let binFolder = path.join(__dirname, 'build/stage/');
-let name = readdirSync(binFolder)[0];
+if(fs.existsSync(binFolder))
+{
+	let name = readdirSync(binFolder)[0];
 let file = fs.createReadStream(path.join(binFolder, name));
 file.pipe(tar.x({
       C: outputDir
  })).on('end', () => {
       console.log('Binary extracted successfully!');
 });
+}
 	
