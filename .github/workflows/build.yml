@@ -65,6 +65,7 @@ jobs:
       # Step 9: Publish to npm
       - name: Publish to npm
         run: |
+          npm cache clean --force
           npm version "${{ steps.version.outputs.version }}-${{ matrix.os }}" --no-git-tag-version
           npm publish --access public  # Publish the package to npm
         env:
