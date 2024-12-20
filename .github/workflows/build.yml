@@ -53,6 +53,7 @@ jobs:
       # Step 7: Package the binary
       - name: Package the speaker binary
         run: |
+          npx @mapbox/node-pre-gyp rebuild
           npx @mapbox/node-pre-gyp package --module_path=./lib/binding/{node_abi}-{platform}-{arch}/  # Package the binary
         env:
           NODE_ENV: production
