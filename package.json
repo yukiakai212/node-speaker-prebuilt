@@ -1,6 +1,6 @@
 {
   "name": "speaker-prebuilt",
-  "version": "1.5.44",
+  "version": "1.5.45",
   "license": "(MIT AND LGPL-2.1-only)",
   "description": "Output PCM audio data to the speakers, prebuilt version",
   "author": "Yuki Akai",
@@ -40,7 +40,8 @@
     "url": "https://github.com/yukiakai212/node-speaker-prebuilt/issues"
   },
   "binary": {
-    "module_name": "speaker-binaries"
+    "module_name": "speaker-binaries",
+	"module_path": "./build/"
   },
   "homepage": "https://github.com/yukiakai212/node-speaker-prebuilt#readme",
   "keywords": [
