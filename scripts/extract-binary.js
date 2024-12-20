@@ -1,6 +1,6 @@
-import path from 'node:path';
-import fs from 'node:fs';
-import tar from 'tar';
+const fs = require('fs');
+const path = require('path');
+const tar = require('tar');
 
 const outputDir = path.join(import.meta.dirname, './build/Release');
 
