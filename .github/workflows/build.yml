@@ -54,7 +54,7 @@ jobs:
       - name: Package the speaker binary
         run: |
           npx @mapbox/node-pre-gyp rebuild
-          npx @mapbox/node-pre-gyp package --module_path=./lib/binding/{node_abi}-{platform}-{arch}/  # Package the binary
+          npx @mapbox/node-pre-gyp package --directory=./build/Release/  # Package the binary
         env:
           NODE_ENV: production
       # Step 8: Get version from package.json using get-version-action
