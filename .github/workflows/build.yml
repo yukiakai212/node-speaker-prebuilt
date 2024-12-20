@@ -56,6 +56,9 @@ jobs:
           npx @mapbox/node-pre-gyp package  # Package the binary
         env:
           NODE_ENV: production
+      - name: test
+        run: |
+          ls -la
       # Step 8: Get version from package.json using get-version-action
       - name: Get version from package.json
         id: version

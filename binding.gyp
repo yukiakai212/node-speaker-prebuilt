@@ -11,13 +11,13 @@
 	  
     },
 	{
-      "target_name": "action_after_build",
-      "type": "none",
-      "dependencies": [ "speaker-binaries" ],
-      "copies": [
+      'target_name': 'action_after_build',
+      'type': 'none',
+      'dependencies': [ '<(module_name)' ],
+      'copies': [
         {
-          "files": [ "./build/Release/speaker-binaries.node" ],
-          "destination": "./build/stage/{node_abi}-{platform}-{arch}/"
+          'files': [ '<(PRODUCT_DIR)/<(module_name).node' ],
+          'destination': '<(module_path)'
         }
       ]
     }
