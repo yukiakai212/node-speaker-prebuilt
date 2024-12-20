@@ -1,6 +1,6 @@
 {
   "name": "speaker-prebuilt",
-  "version": "1.5.42",
+  "version": "1.5.44",
   "license": "(MIT AND LGPL-2.1-only)",
   "description": "Output PCM audio data to the speakers, prebuilt version",
   "author": "Yuki Akai",
@@ -11,11 +11,11 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "standard && node-gyp rebuild --mpg123-backend=dummy && mocha --reporter spec"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "files": [
     "index.js",
-    "index.d.js",
+    "index.d.ts",
     "build/*.node",
     "README.md"
   ],
