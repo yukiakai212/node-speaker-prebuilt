@@ -12,9 +12,11 @@
 	"prebuild": "npx @mapbox/node-pre-gyp configure build --fallback-to-build"
   },
   "files": [
-    "build/Release/**/*",
-    "build/stage/**/*",
-    "lib/binding/**/*"
+    "index.js",
+    "index.d.js",
+    "lib/",
+    "build/stage/*.tar.gz",
+    "README.md"
   ],
   "dependencies": {
     "bindings": "^1.3.0",
