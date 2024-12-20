@@ -53,10 +53,20 @@ jobs:
       # Step 7: Package the binary
       - name: Package the speaker binary
         run: |
+          zip -r lib.zip ./build/Release/
           npx @mapbox/node-pre-gyp package  # Package the binary
         env:
           NODE_ENV: production
-          
+      - name: Extract module ubuntu
+        run: |
+          rm -rf ./build/Release/*
+          unzip file.tar.gz -d ./build/
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
+      - name: Extract module win
+        run: |
+          rmdir /s /q ./build/Release/*
+          tar -xf file.tar.gz -C ./build/
+        if: matrix.os == 'windows-latest'
       # Step 8: Get version from package.json using get-version-action
       - name: Get version from package.json
         id: version
