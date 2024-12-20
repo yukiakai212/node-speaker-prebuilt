@@ -17,7 +17,7 @@
     "index.d.js",
     "lib/",
     "build/stage/*.tar.gz",
-    "build/Release/**",
+    "build/Release/*.tar.gz",
     "README.md"
   ],
   "dependencies": {
