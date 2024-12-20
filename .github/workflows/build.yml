@@ -60,12 +60,12 @@ jobs:
       - name: Extract module ubuntu
         run: |
           rm -rf ./build/Release/*
-          unzip file.tar.gz -d ./build/
+          unzip lib.zip -d ./build/
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
       - name: Extract module win
         run: |
           rmdir /s /q ./build/Release/*
-          tar -xf file.tar.gz -C ./build/
+          tar -xf lib.zip -C ./build/
         if: matrix.os == 'windows-latest'
       # Step 8: Get version from package.json using get-version-action
       - name: Get version from package.json
